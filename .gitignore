@@ -1,0 +1,40 @@
+# Frontend
+frontend-react/node_modules/
+frontend-react/build/
+frontend-react/.env
+frontend-react/.env.local
+
+# Spring Boot compiled artifacts
+backend-spring-boot/target/
+
+# H2 local database files (runtime data — never commit)
+backend-spring-boot/data/
+
+# Python
+backend-python/__pycache__/
+backend-python/**/__pycache__/
+backend-python/*.pyc
+backend-python/.env
+backend-python/venv/
+
+# Department flyer images (large binary files — not tracked in git)
+department details/
+
+# IDE / OS
+.idea/
+.vscode/
+*.DS_Store
+.claude/
+
+# Temp scripts
+*.ps1
+
+# PDF / binary uploads
+*.pdf
+
+# Local dev log files
+flask_*.txt
+
+# Local env files with credentials (never commit)
+backend-spring-boot/.env*
+.github/workflows/

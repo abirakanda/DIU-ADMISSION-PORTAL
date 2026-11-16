@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: diu_postgres
+    environment:
+      POSTGRES_DB: university_automation
+      POSTGRES_USER: diu_user
+      POSTGRES_PASSWORD: diu@321.bd
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U diu_user -d university_automation"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - diu-net
+
+  python-service:
+    build: ./backend-python
+    container_name: diu_python_service
+    env_file: ./backend-python/.env
+    ports:
+      - "5000:5000"
+    networks:
+      - diu-net
+    restart: unless-stopped
+
+  spring-boot:
+    build:
+      context: .
+      dockerfile: backend-spring-boot/Dockerfile
+    container_name: diu_spring_boot
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: university_automation
+      DB_USERNAME: diu_user
+      DB_PASSWORD: diu@321.bd
+      PYTHON_SERVICE_URL: http://python-service:5000
+      CORS_ALLOWED_ORIGINS: http://localhost:3000
+      JWT_SECRET: diu-local-dev-secret-key-2024-must-be-at-least-32-chars
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      python-service:
+        condition: service_started
+    networks:
+      - diu-net
+    restart: unless-stopped
+
+  react-frontend:
+    build: ./frontend-react
+    container_name: diu_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - spring-boot
+    networks:
+      - diu-net
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  diu-net:
+    driver: bridge
