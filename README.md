@@ -2,6 +2,8 @@
 
 > A full-stack, AI-driven automation platform for **Daffodil International University (DIU)** — replacing manual admission, advising, and student-affairs workflows with intelligent, RAG-powered assistants.
 
+### 🌐 Live Demo: **[https://diu-frontend.onrender.com/](https://diu-frontend.onrender.com/)**
+
 [![Frontend](https://img.shields.io/badge/Frontend-React%2018-61DAFB?logo=react&logoColor=white)](#)
 [![Backend](https://img.shields.io/badge/Backend-Spring%20Boot%203.2-6DB33F?logo=springboot&logoColor=white)](#)
 [![AI Service](https://img.shields.io/badge/AI-Flask%20%2B%20Groq-000000?logo=flask&logoColor=white)](#)
